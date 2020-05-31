@@ -1,4 +1,4 @@
-const AppError = require('app-err');
+const AppError = require('ap-err');
 
 /**
  * Send Error Information When In Development
