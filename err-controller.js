@@ -1,4 +1,4 @@
-const AppError = require('ap-err');
+const AppError = require("ap-err");
 
 /**
  * Send Error Information When In Development
@@ -8,7 +8,7 @@ const AppError = require('ap-err');
  */
 const sendErrorDev = (err, req, res) => {
   //API
-  if (req.originalUrl.startsWith('/api')) {
+  if (req.originalUrl.startsWith("/api")) {
     return res.status(err.statusCode).json({
       status: err.status,
       error: err,
@@ -17,10 +17,10 @@ const sendErrorDev = (err, req, res) => {
     });
   }
   // RENDERED WEBSITE
-  console.error('ERROR', err);
+  console.error("ERROR", err);
   return res
     .status(err.statusCode)
-    .render('error', { title: 'Something went wrong', msg: err.message });
+    .render("error", { title: "Something went wrong", msg: err.message });
 };
 
 /**
@@ -30,7 +30,7 @@ const sendErrorDev = (err, req, res) => {
  * @param {*} res
  */
 const sendErrorProd = (err, req, res) => {
-  if (req.originalUrl.startsWith('/api')) {
+  if (req.originalUrl.startsWith("/api")) {
     //Operational, trusted error: Send Message to client
     if (err.isOperational) {
       return res.status(err.statusCode).json({
@@ -41,25 +41,25 @@ const sendErrorProd = (err, req, res) => {
     }
 
     //Log error to the console
-    console.error('ERROR', err);
+    console.error("ERROR", err);
     return res
       .status(500)
-      .json({ status: 'error', message: 'Something went wrong' });
+      .json({ status: "error", message: "Something went wrong" });
   }
 
   // RENDERED WEBSITE
   if (err.isOperational) {
     return res
       .status(err.statusCode)
-      .render('error', { title: 'Something went wrong', msg: err.message });
+      .render("error", { title: "Something went wrong", msg: err.message });
     // Programming or other unknown error: don't leak details to client - send generic message instead
   }
 
   //Log error to the console
-  console.error('ERROR', err);
-  return res.status(err.statusCode).render('error', {
-    title: 'Something went wrong',
-    msg: 'Please try again later.',
+  console.error("ERROR", err);
+  return res.status(err.statusCode).render("error", {
+    title: "Something went wrong",
+    msg: "Please try again later.",
   });
 };
 
@@ -95,7 +95,7 @@ const handleDuplicateFieldsDB = (err) => {
  */
 const handleValidationErrorDB = (err) => {
   const errArr = Object.values(err.errors).map((el) => el.message);
-  const msg = 'Invalid input data. ' + errArr.join('. ');
+  const msg = "Invalid input data. " + errArr.join(". ");
   return new AppError(msg, 400);
 };
 
@@ -106,7 +106,7 @@ const handleValidationErrorDB = (err) => {
  * @returns AppError
  */
 const handleJsonWebTokenErrorDB = () =>
-  new AppError('Invalid token. Please log in again.', 401);
+  new AppError("Invalid token. Please log in again.", 401);
 
 /**
  ** HANDLE JSON WEB TOKEN EXPIRED ERROR
@@ -115,27 +115,27 @@ const handleJsonWebTokenErrorDB = () =>
  * @returns AppError
  */
 const handleTokenExpiredErrorDB = () =>
-  new AppError('Your token has expired! Please log in again.', 401);
+  new AppError("Your token has expired! Please log in again.", 401);
 
 // !GLOBAL ERROR HANDLING MIDDLEWARE
 module.exports = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500; //500 = InternalServerError
-  err.status = err.status || 'error';
+  err.status = err.status || "error";
 
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === "development") {
     sendErrorDev(err, req, res);
-  } else if (process.env.NODE_ENV === 'production') {
+  } else if (process.env.NODE_ENV === "production") {
     // make a hard copy of the function variable
     let error = { ...err };
     error.message = err.message;
 
     // handle misc operational errors
-    if (error.name === 'CastError') error = handleCastErrorDB(error);
+    if (error.name === "CastError") error = handleCastErrorDB(error);
     if (error.code === 11000) error = handleDuplicateFieldsDB(error);
-    if (error.name === 'ValidationError')
+    if (error.name === "ValidationError")
       error = handleValidationErrorDB(error);
-    if (error.name === 'JsonWebTokenError') error = handleJsonWebTokenErrorDB();
-    if (error.name === 'TokenExpiredError') error = handleTokenExpiredErrorDB();
+    if (error.name === "JsonWebTokenError") error = handleJsonWebTokenErrorDB();
+    if (error.name === "TokenExpiredError") error = handleTokenExpiredErrorDB();
 
     sendErrorProd(error, req, res);
   }
