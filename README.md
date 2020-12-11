@@ -1,29 +1,21 @@
-<h1 align="center">Welcome to err-controller 👋</h1>
-<p>
-  <a href="https://www.npmjs.com/package/err-controller" target="_blank">
-    <img alt="Version" src="https://img.shields.io/npm/v/err-controller.svg">
-  </a>
-  <a href="#" target="_blank">
-    <img alt="License: ISC" src="https://img.shields.io/badge/License-ISC-yellow.svg" />
-  </a>
-</p>
+# Err-Controller
+[![GitHub Release](https://img.shields.io/github/release/zjayers/err-controller.svg?style=flat)]()
+[![GitHub pull requests](https://img.shields.io/github/issues-pr/zjayers/err-controller.svg?style=flat)]()
+[![Issues](https://img.shields.io/github/issues-raw/zjayers/err-controller.svg?maxAge=25000)](https://github.com/zjayers/err-controller/issues)
+[![MIT License](https://img.shields.io/apm/l/atomic-ui.svg?)](https://github.com/zjayers/err-controller/blob/master/LICENSEs)
 
-## Install
+## Description
 
-```sh
-npm install
-```
+> Work in progress
 
-## Run tests
+## Features
 
-```sh
-npm run test
-```
+> Work in progress
 
-## Show your support
+## Installation
 
-Give a ⭐️ if this project helped you!
+> Work in progress
 
----
+## Usage
 
-_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
+> Work in progress
